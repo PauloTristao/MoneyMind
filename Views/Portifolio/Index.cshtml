@@ -3,6 +3,13 @@
     Layout = "_LayoutSideBar";
 }
 
+
+<style>
+    .modal-backdrop {
+        z-index: 0;
+    }
+
+</style>
 <head>
     <link rel="stylesheet" href="~/css/portifolio.css" />
 </head>
@@ -34,8 +41,8 @@
                 </div>
             </div>
         </fieldset>
-        <fieldset class="mt-3" >
-            <legend style ="width: 11%">Carteiras</legend>
+        <fieldset class="mt-3">
+            <legend style="width: 11%">Carteiras</legend>
             <div class="row ml-3">
                 <div class="mt-auto text-right">
                     <a href="#" class="btn btn-dark">+</a>
@@ -60,6 +67,62 @@
         </fieldset>
     </div>
 
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        <div class="col-md-3">
+                            <label for="Portifolio.NomePortifolio" class="control-label">Nome:</label>
+                            <input asp-for="Portifolio.NomePortifolio" class="form-control" />
+                            <span asp-validation-for="Portifolio.NomePortifolio" class="text-danger"></span>
+                            <br />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="SalvaNomePortifolio('/Portifolio/Save')">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
+
+<script>
+    $('#exampleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var recipient = button.data('whatever') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('.modal-title').text('New message to ' + recipient)
+        modal.find('.modal-body input').val(recipient)
+    })
+
+
+
+    function SalvaNomePortifolio(url) {
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            success: function (data) {
+                $("#content-container").html(data);
+            },
+            error: function () {
+                alert("Erro ao carregar o conteúdo.");
+            }
+        });
+    }
+
+</script>
 
 
