@@ -168,6 +168,20 @@ begin
  end
 GO
 
+CREATE OR ALTER procedure spDelete
+(
+ @id int ,
+ @tabela varchar(max)
+)
+as
+begin
+ declare @sql varchar(max);
+ set @sql = ' delete ' + @tabela +
+ ' where id_' + @tabela + ' = ' + cast(@id as varchar(max))
+ exec(@sql)
+end
+GO
+
 -----------------------------------------------------SP's USUARIO--------------------------------------------------
 
 go

@@ -11,7 +11,7 @@ namespace MoneyMind.DAO
         {
             SqlParameter[] parameters = new SqlParameter[2];
             parameters[0] = new SqlParameter("id", model.Id);
-            parameters[1] = new SqlParameter("id_usuario", model.Id_Usuario);
+            parameters[1] = new SqlParameter("id_usuario", model.IdUsuario);
             parameters[2] = new SqlParameter("nome", model.Nome);
 
             return parameters;
@@ -21,7 +21,7 @@ namespace MoneyMind.DAO
         {
             PortifolioViewModel portifolio = new PortifolioViewModel();
             portifolio.Id = Convert.ToInt32(registro["id_portifolio"]);
-            portifolio.Id_Usuario = Convert.ToInt32(registro["id_usuario"]);
+            portifolio.IdUsuario = Convert.ToInt32(registro["id_usuario"]);
             portifolio.Nome = registro["nome"].ToString();
             return portifolio;
         }

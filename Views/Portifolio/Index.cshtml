@@ -12,11 +12,14 @@
 </style>
 <head>
     <link rel="stylesheet" href="~/css/portifolio.css" />
+    <script src="~/js/site.js"></script>
 </head>
 <body>
     <div class="container">
         <fieldset class="mt-3">
             <legend>Portifólio</legend>
+            <input type="hidden" id="IdPortifolio" name="IdPortifolio" value="@Model.Portifolio.IdPortifolio" />
+            <input type="hidden" id="IdUsuario" name="IdUsuario" value="@Model.Portifolio.IdUsuario" />
             <div class="row">
                 <div class="col-md-3">
                     <label for="Portifolio.NomePortifolio" class="control-label">Nome:</label>
@@ -77,14 +80,12 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="post">
-                        <div class="col-md-3">
-                            <label for="Portifolio.NomePortifolio" class="control-label">Nome:</label>
-                            <input asp-for="Portifolio.NomePortifolio" class="form-control" />
-                            <span asp-validation-for="Portifolio.NomePortifolio" class="text-danger"></span>
-                            <br />
-                        </div>
-                    </form>
+                     <div class="col-md-6">
+                         <label for="Portifolio.NomePortifolio" class="control-label">Nome:</label>
+                         <input asp-for="Portifolio.NomePortifolio" class="form-control" />
+                         <span asp-validation-for="Portifolio.NomePortifolio" class="text-danger"></span>
+                         <br />
+                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -106,22 +107,6 @@
         modal.find('.modal-title').text('New message to ' + recipient)
         modal.find('.modal-body input').val(recipient)
     })
-
-
-
-    function SalvaNomePortifolio(url) {
-
-        $.ajax({
-            url: url,
-            type: "POST",
-            success: function (data) {
-                $("#content-container").html(data);
-            },
-            error: function () {
-                alert("Erro ao carregar o conteúdo.");
-            }
-        });
-    }
 
 </script>
 

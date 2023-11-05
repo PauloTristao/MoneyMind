@@ -29,6 +29,7 @@
         <fieldset>
             <legend>Cadastro</legend>
             <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
+            <input asp-for="Id" type="hidden" />
 
             @if (!ViewData.ModelState.IsValid)
             {
@@ -51,7 +52,7 @@
             <span asp-validation-for="Ticker" class="text-danger"></span>
             <br />
 
-            <label for="Empresa" class "control-label">Nome da Empresa</label>
+            <label for="Empresa" class="control-label">Nome da Empresa</label>
             <input asp-for="Empresa" class="form-control" />
             <span asp-validation-for="Empresa" class="text-danger"></span>
             <br />

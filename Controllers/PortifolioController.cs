@@ -26,7 +26,9 @@ namespace MoneyMind.Controllers
                 PortifolioCompletoViewModel pc = new PortifolioCompletoViewModel();
                 pc.Portifolio = new PortifolioConsultaViewModel()
                 {
+                    IdPortifolio = portifolio.Id,
                     NomePortifolio = portifolio.Nome,
+                    IdUsuario = portifolio.IdUsuario
                 };
 
 

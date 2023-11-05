@@ -35,7 +35,7 @@ namespace MoneyMind.Controllers
 
                     PortifolioViewModel port = new PortifolioViewModel()
                     {
-                        Id_Usuario = model.Id,
+                        IdUsuario = model.Id,
                         Nome = model.NomePortifolio
                     };
                     PortifolioDAO portifolio = new PortifolioDAO();
