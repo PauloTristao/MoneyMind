@@ -9,6 +9,10 @@ namespace MoneyMind.Controllers
 {
     public class PortifolioController : PadraoController<PortifolioViewModel>
     {
+        public PortifolioController()
+        {
+            DAO = new PortifolioDAO();
+        }
         public override IActionResult Index()
         {
             try

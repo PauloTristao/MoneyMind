@@ -6,13 +6,13 @@
 function SalvaNomePortifolio(url) {
     debugger;
     var idPortifolio = $("#IdPortifolio").val();
-    var nomePortifolio = $("#Portifolio_NomePortifolio").val();
+    var nomePortifolio = $("#NomePortifolioModal").val();
     var idUsuario = $("#IdUsuario").val();
 
     var data =
     {
         Model: {
-            IdPortifolio: idPortifolio,
+            Id: idPortifolio,
             Nome: nomePortifolio,
             IdUsuario: idUsuario
         },

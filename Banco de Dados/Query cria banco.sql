@@ -247,6 +247,31 @@ GO
 ------------------------------------------------SP's Portifolio---------------------------------------------------------
 
 go
+Create or alter procedure spUpdate_Portifolio
+(
+	@id int,
+	@Nome varchar(max),
+	@id_usuario int
+)
+as
+begin
+	update Portifolio set nome = @Nome, id_usuario = @id_usuario
+					   where id_usuario = @id
+end
+
+go
+create or alter procedure spInsert_Portifolio
+(
+	@Nome varchar(max),
+	@id_usuario int
+)
+as
+begin
+	insert into Portifolio (nome, id_usuario) 
+			            values (@nome, @id_usuario)
+end
+
+go
 create or alter procedure spConsulta_PortifolioPorUsuario
 (
    @id_usuario int

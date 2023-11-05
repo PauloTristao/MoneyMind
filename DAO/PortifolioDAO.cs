@@ -9,10 +9,11 @@ namespace MoneyMind.DAO
     {
         protected override SqlParameter[] CriaParametros(PortifolioViewModel model)
         {
-            SqlParameter[] parameters = new SqlParameter[2];
-            parameters[0] = new SqlParameter("id", model.Id);
-            parameters[1] = new SqlParameter("id_usuario", model.IdUsuario);
-            parameters[2] = new SqlParameter("nome", model.Nome);
+            SqlParameter[] parameters = new SqlParameter[] {
+                new SqlParameter("id", model.Id),
+                new SqlParameter("id_usuario", model.IdUsuario),
+                new SqlParameter("nome", model.Nome)
+            };
 
             return parameters;
         }
@@ -43,6 +44,7 @@ namespace MoneyMind.DAO
         protected override void SetTabela()
         {
             Tabela = "Portifolio";
+            ChaveIdentity = true;
         }
     }
 }
