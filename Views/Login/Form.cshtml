@@ -1,0 +1,73 @@
+﻿@model UsuarioViewModel
+@{
+    Layout = "_Layout";
+}
+
+<style>
+    fieldset {
+        padding: 0 10px 10px;
+        border: 1px solid #666;
+        border-radius: 8px;
+        padding-top: 10px;
+    }
+
+    legend {
+        padding: 2px 4px;
+        width: 15%
+    }
+
+    .container {
+        max-width: 100%;
+        width: 50%; /* Ajuste a largura conforme necessário */
+        margin: 0 auto; /* Centraliza horizontalmente */
+    }
+
+</style>
+<form action="Save" method="post">
+    <div class="container">
+
+        <fieldset>
+            <legend>Cadastro</legend>
+            <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
+
+            <label for="LoginUsuario" class="control-label">Login do Usuario</label>
+            <input asp-for="LoginUsuario" class="form-control" />
+            <span asp-validation-for="LoginUsuario" class="text-danger"></span>
+            <br />
+
+            <label for="NomePessoa" class="control-label">Nome</label>
+            <input asp-for="NomePessoa" class="form-control" />
+            <span asp-validation-for="NomePessoa" class="text-danger"></span>
+            <br />
+
+            <label for="NomePortifolio" class="control-label">Nome do portifólio</label>
+            <input asp-for="NomePortifolio" class="form-control" />
+            <span asp-validation-for="NomePortifolio" class="text-danger"></span>
+            <br />
+
+            <label for="Senha" class="control-label">Senha</label>
+            <input asp-for="Senha" type="password" class="form-control" />
+            <span asp-validation-for="Senha" class="text-danger"></span>
+
+            <br />
+            <input type="file" name="Imagem" id="Imagem" onchange="exibirImagem()" class="btn btn-secondary">
+            <img id="imgPreview" src="data:image/jpeg;base64,@Model.ImagemEmBase64" class="img-responsive"
+                 width="200">
+            <span asp-validation-for="Imagem" class="text-danger"></span>
+            <br />
+            <br />
+            <input type="submit" value="Salvar dados" class="btn btn-info" />
+            <br />
+        </fieldset>
+    </div>
+</form>
+
+<script>
+    function exibirImagem() {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("Imagem").files[0]);
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("imgPreview").src = oFREvent.target.result;
+        };
+    }
+</script>

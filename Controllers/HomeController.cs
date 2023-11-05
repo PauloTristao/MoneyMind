@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MoneyMind.Models;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MoneyMind.Controllers
 {
@@ -13,13 +9,23 @@ namespace MoneyMind.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
 
         public IActionResult Index()
         {
+            UsuarioViewModel usuario = HttpContext.Session.GetObject<UsuarioViewModel>("Usuario");
+            if(usuario != null)
+            {
+                ViewBag.LoginUsuario = usuario.LoginUsuario.ToUpper();
+                ViewBag.NomePessoa = usuario.NomePessoa.ToUpper();
+                ViewBag.ImagemBase64 = usuario.ImagemEmBase64;
+            }
+            else
+                return RedirectToAction("Index", "Login");
+
             return View();
         }
 

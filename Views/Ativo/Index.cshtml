@@ -1,0 +1,42 @@
+﻿@model List<AtivoViewModel>
+@{
+    Layout = "_LayoutSideBar";
+}
+
+
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<h2>Lista de Ativos da Bolsa de Valores</h2>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Ticker</th>
+                <th>Empresa</th>
+                <th>Classe de Ativo</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (AtivoViewModel ativo in Model)
+            {
+                <tr>
+                    <td>@ativo.Id</td>
+                    <td>@ativo.Ticker</td>
+                    <td>@ativo.Empresa</td>
+                    <td>@ativo.Id_classe_ativo</td>
+                    <td>
+                        <a href="/Ativo/Edit?id=@ativo.Id" class="btn btn-primary">Editar</a>
+                        <a href="javascript:apagarRegistro(@ativo.Id, 'Ativo')" class="btn btn-danger">Excluir</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="text-right">
+        <a href="/Ativo/Create" class="btn btn-success">Adicionar Ativo</a>
+    </div>
+</div>
