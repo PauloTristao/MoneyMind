@@ -119,6 +119,10 @@ namespace MoneyMind
                 context.Result = RedirectToAction("Index", "Login");
             else
             {
+                UsuarioViewModel usuario = HttpContext.Session.GetObject<UsuarioViewModel>("Usuario");
+                ViewBag.LoginUsuario = usuario.LoginUsuario.ToUpper();
+                ViewBag.NomePessoa = usuario.NomePessoa.ToUpper();
+                ViewBag.ImagemBase64 = usuario.ImagemEmBase64;
                 base.OnActionExecuting(context);
             }
         }

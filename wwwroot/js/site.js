@@ -24,9 +24,7 @@ function SalvaNomePortifolio(url) {
          type: "POST",
          data: data,
          success: function (data) {
-             $.ajax({
-                 url: "/Portifolio/Index"
-             });
+             location.href = "/Portifolio/Index";
          },
          error: function () {
              alert("Erro ao carregar o conteúdo.");
