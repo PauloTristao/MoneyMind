@@ -23,36 +23,19 @@
     }
 
 </style>
-    <form asp-action="Save" enctype="multipart/form-data">
+<form action="Save" method="post">
     <div class="container">
 
         <fieldset>
             <legend>Cadastro</legend>
             <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
-            <input asp-for="Id" type="hidden" />
 
-            @if (!ViewData.ModelState.IsValid)
-            {
-                    <div class="alert alert-danger">
-                        <p>Por favor, corrija os seguintes erros:</p>
-                        <ul>
-                        @foreach (var key in ViewData.ModelState.Keys)
-                        {
-                            foreach (var error in ViewData.ModelState[key].Errors)
-                            {
-                                            <li>@error.ErrorMessage</li>
-                            }
-                        }
-                        </ul>
-                    </div>
-            }
-
-            <label for="loginUsuario" class="control-label">Login do Usuario</label>
+            <label for="LoginUsuario" class="control-label">Login do Usuario</label>
             <input asp-for="LoginUsuario" class="form-control" />
             <span asp-validation-for="LoginUsuario" class="text-danger"></span>
             <br />
 
-            <label for="NomePessoa" class="control-label">Nome da pessoa</label>
+            <label for="NomePessoa" class="control-label">Nome</label>
             <input asp-for="NomePessoa" class="form-control" />
             <span asp-validation-for="NomePessoa" class="text-danger"></span>
             <br />
@@ -62,15 +45,9 @@
             <span asp-validation-for="NomePortifolio" class="text-danger"></span>
             <br />
 
-            <label for="Administrador" class="control-label">Administrador</label>
-            <input asp-for="Adm" class="form-control" />
-            <span asp-validation-for="Adm" class="text-danger"></span>
-            <br />
-
-            <label for="senha" class="control-label">Senha</label>
-            <input asp-for="Senha" class="form-control" />
+            <label for="Senha" class="control-label">Senha</label>
+            <input asp-for="Senha" type="password" class="form-control" />
             <span asp-validation-for="Senha" class="text-danger"></span>
-            <br />
 
             <br />
             <input type="file" name="Imagem" id="Imagem" onchange="exibirImagem()" class="btn btn-secondary">
@@ -78,9 +55,8 @@
                  width="200">
             <span asp-validation-for="Imagem" class="text-danger"></span>
             <br />
-
+            <br />
             <input type="submit" value="Salvar dados" class="btn btn-info" />
-            <a href="javascript:history.back()" class="btn btn-default">Voltar</a>
             <br />
         </fieldset>
     </div>
