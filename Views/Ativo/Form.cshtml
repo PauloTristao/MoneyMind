@@ -1,0 +1,79 @@
+﻿@model AtivoViewModel
+@{
+    Layout = "_Layout";
+}
+
+<style>
+    fieldset {
+        padding: 0 10px 10px;
+        border: 1px solid #666;
+        border-radius: 8px;
+        padding-top: 10px;
+    }
+
+    legend {
+        padding: 2px 4px;
+        width: 15%
+    }
+
+    .container {
+        max-width: 100%;
+        width: 50%; /* Ajuste a largura conforme necessário */
+        margin: 0 auto; /* Centraliza horizontalmente */
+    }
+
+</style>
+<form action="Save" method="post">
+    <div class="container">
+
+        <fieldset>
+            <legend>Cadastro</legend>
+            <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                    <div class="alert alert-danger">
+                        <p>Por favor, corrija os seguintes erros:</p>
+                        <ul>
+                        @foreach (var key in ViewData.ModelState.Keys)
+                        {
+                            foreach (var error in ViewData.ModelState[key].Errors)
+                            {
+                                            <li>@error.ErrorMessage</li>
+                            }
+                        }
+                        </ul>
+                    </div>
+            }
+
+            <label for="Ticker" class="control-label">Ticker</label>
+            <input asp-for="Ticker" class="form-control" />
+            <span asp-validation-for="Ticker" class="text-danger"></span>
+            <br />
+
+            <label for="Empresa" class "control-label">Nome da Empresa</label>
+            <input asp-for="Empresa" class="form-control" />
+            <span asp-validation-for="Empresa" class="text-danger"></span>
+            <br />
+
+            <label for="Id_classe_ativo" class="control-label">Id da classe do ativo</label>
+            <input asp-for="Id_classe_ativo" class="form-control" />
+            <span asp-validation-for="Id_classe_ativo" class="text-danger"></span>
+            <br />
+
+            <input type="submit" value="Salvar dados" class="btn btn-info" />
+            <a href="javascript:history.back()" class="btn btn-default">Voltar</a>
+            <br />
+        </fieldset>
+    </div>
+</form>
+
+<script>
+    function exibirImagem() {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("Imagem").files[0]);
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("imgPreview").src = oFREvent.target.result;
+        };
+    }
+</script>
