@@ -294,7 +294,34 @@ begin
 end
 GO
 
+go
+Create or alter procedure spUpdate_Carteira
+(
+	@id int,
+	@descricao varchar(max),
+	@id_portifolio int
+)
+as
+begin
+	update Carteira set descricao = @descricao, id_portifolio = @id_portifolio
+					   where id_carteira = @id
+end
+
+go
+create or alter procedure spInsert_Carteira
+(
+	@descricao varchar(max),
+	@id_portifolio int
+)
+as
+begin
+	insert into Carteira (descricao, id_portifolio) 
+			            values (@descricao, @id_portifolio)
+end
+
+
 ------------------------------------------------SP's Movimentacao---------------------------------------------------------
+go
 create or alter procedure spConsulta_MovimentacaoPorCarteira
 (
    @id_carteira int

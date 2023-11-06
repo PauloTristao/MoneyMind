@@ -15,17 +15,17 @@ namespace MoneyMind.Controllers
             DAO = new CarteiraDAO();
         }
 
-        public override IActionResult Index()
-        {
-            try
-            {
-                return RedirectToAction("CarregaCarteira");
-            }
-            catch (Exception erro)
-            {
-                return View("Error", new ErrorViewModel(erro.ToString()));
-            }
-        }
+        //public override IActionResult Index()
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction("CarregaCarteira");
+        //    }
+        //    catch (Exception erro)
+        //    {
+        //        return View("Error", new ErrorViewModel(erro.ToString()));
+        //    }
+        //}
 
         public IActionResult CarregaCarteira(int id)
         {
@@ -99,5 +99,30 @@ namespace MoneyMind.Controllers
             }
         }
 
+        public override IActionResult Save(CarteiraViewModel model, string Operacao)
+        {
+            try
+            {
+                ValidaDados(model, Operacao);
+                if (ModelState.IsValid == false)
+                {
+                    ViewBag.Operacao = Operacao;
+                    PreencheDadosParaView(Operacao, model);
+                    return View(NomeViewForm, model);
+                }
+                else
+                {
+                    if (Operacao == "I")
+                        DAO.Insert(model);
+                    else
+                        DAO.Update(model);
+                    return CarregaCarteira(model.Id);
+                }
+            }
+            catch (Exception erro)
+            {
+                return View("Error", new ErrorViewModel(erro.ToString()));
+            }
+        }
     }
 }

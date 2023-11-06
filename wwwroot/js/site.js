@@ -31,6 +31,35 @@ function SalvaNomePortifolio(url) {
      });
 };
 
+function SalvaNomeCarteira(url) {
+    var idCarteira = $("#IdCarteira").val();
+    var nomeCarteira = $("#NomeCarteiraModal").val();
+    var idPortifolio = $("#IdPortifolio").val();
+
+    var data =
+    {
+        Model: {
+            Id: idCarteira,
+            Descricao: nomeCarteira,
+            Id_Portifolio: idPortifolio
+        },
+        Operacao: "A"
+    };
+
+    $.ajax({
+        url: url,
+        type: "POST",
+        data: data,
+        success: function (data) {
+            location.href = "/Carteira/CarregaCarteira/" + idCarteira;
+        },
+        error: function () {
+            alert("Erro ao carregar o conteúdo.");
+        }
+    });
+};
+
+
 function ConsultaCarteira(url, id) {
     window.location.href = url + "/" + id;
 }
