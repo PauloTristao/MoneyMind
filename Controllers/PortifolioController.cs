@@ -42,12 +42,15 @@ namespace MoneyMind.Controllers
                 {
                     carteiraPortifolio = new CarteiraPortifolioViewModel();
                     carteiraPortifolio.CarteiraNome = carteira.Descricao;
+                    carteiraPortifolio.IdCarteira = carteira.Id;
+                    List<MovimentacaoViewModel> movimentacoes = new List<MovimentacaoViewModel>();
+                    movimentacoes = mov.ConsultaMovimentacoesPorCarteira(carteira.Id);
 
-                    List<MovimentacaoViewModel> movimentacao = new List<MovimentacaoViewModel>();
-                    movimentacao = mov.ConsultaMovimentacoesPorCarteira(carteira.Id);
-
-                    carteiraPortifolio.Quantidade = movimentacao.Sum(x => x.Quantidade);
-                    carteiraPortifolio.Total = movimentacao.Sum(x => x.Preco) * carteiraPortifolio.Quantidade;
+                    foreach(var movimentacao in movimentacoes)
+                    {
+                        carteiraPortifolio.Total += movimentacao.Quantidade * movimentacao.Preco;
+                        carteiraPortifolio.Quantidade += movimentacao.Quantidade;
+                    }
 
                     pc.Carteiras.Add(carteiraPortifolio);
                 }

@@ -1,8 +1,7 @@
-﻿@model PortifolioCompletoViewModel
+﻿@model CarteiraCompletaViewModel
 @{
     Layout = "_LayoutSideBar";
 }
-
 
 <style>
     .modal-backdrop {
@@ -11,32 +10,32 @@
 
 </style>
 <head>
-    <link rel="stylesheet" href="~/css/portifolio.css" />
+    <link rel="stylesheet" href="~/css/carteira.css" />
     <script src="~/js/site.js"></script>
 </head>
 <body>
     <div class="container">
         <fieldset class="mt-3">
-            <legend>Portifólio</legend>
-            <input type="hidden" id="IdPortifolio" name="IdPortifolio" value="@Model.Portifolio.IdPortifolio" />
-            <input type="hidden" id="IdUsuario" name="IdUsuario" value="@Model.Portifolio.IdUsuario" />
+            <legend>Carteira</legend>
+ @*            <input type="hidden" id="IdPortifolio" name="IdPortifolio" value="@Model.Portifolio.IdPortifolio" />
+            <input type="hidden" id="IdUsuario" name="IdUsuario" value="@Model.Portifolio.IdUsuario" /> *@
             <div class="row">
                 <div class="col-md-3">
-                    <label for="Portifolio.NomePortifolio" class="control-label">Nome:</label>
-                    <input asp-for="Portifolio.NomePortifolio" class="form-control" readonly />
-                    <span asp-validation-for="Portifolio.NomePortifolio" class="text-danger"></span>
+                    <label for="Carteira." class="control-label">Nome:</label>
+                    <input asp-for="Carteira.NomeCarteira" class="form-control" readonly />
+                    <span asp-validation-for="Carteira.NomeCarteira" class="text-danger"></span>
                     <br />
                 </div>
                 <div class="col-md-3">
-                    <label for="Portifolio.Total" class="control-label">Total:</label>
-                    <input asp-for="Portifolio.Total" class="form-control" readonly />
-                    <span asp-validation-for="Portifolio.Total" class="text-danger"></span>
+                    <label for="Carteira.Total" class="control-label">Total:</label>
+                    <input asp-for="Carteira.Total" class="form-control" readonly />
+                    <span asp-validation-for="Carteira.Total" class="text-danger"></span>
                     <br />
                 </div>
                 <div class="col-md-2">
-                    <label for="Portifolio.Quantidade" class="control-label">Quantidade:</label>
-                    <input asp-for="Portifolio.Quantidade" class="form-control" readonly />
-                    <span asp-validation-for="Portifolio.Quantidade" class="text-danger"></span>
+                    <label for="Carteira.Quantidade" class="control-label">Quantidade:</label>
+                    <input asp-for="Carteira.Quantidade" class="form-control" readonly />
+                    <span asp-validation-for="Carteira.Quantidade" class="text-danger"></span>
                     <br />
                 </div>
                 <div class="col-md-1 text-right" style="margin-top: 30px">
@@ -45,22 +44,22 @@
             </div>
         </fieldset>
         <fieldset class="mt-3">
-            <legend style="width: 11%">Carteiras</legend>
+            <legend style="width: 11%">Ativos</legend>
             <div class="row ml-3">
                 <div class="mt-auto text-right">
-                    <a href="+" class="btn btn-dark">+</a>
+                    <a href="#" class="btn btn-dark">+</a>
                 </div>
             </div>
             <section>
                 <div class="row mt-3">
-                    @foreach (CarteiraPortifolioViewModel carteira in Model.Carteiras)
+                    @foreach (AtiovoCarteiraConsultaViewModel ativo in Model.Ativos)
                     {
                         <div class="col-md-3 mb-5">
-                            <div class="card"  style="width: 15rem;">
-                                <div class="card-body" onclick="ConsultaCarteira('/Carteira/CarregaCarteira', @carteira.IdCarteira)">
-                                    <h5 class="card-title">@carteira.CarteiraNome</h5>
-                                    <p>Quantidade: @carteira.Quantidade</p>
-                                    <p>Total: R$@carteira.Total</p>
+                            <div class="card" style="width: 15rem;">
+                                <div class="card-body ">
+                                    <h5 class="card-title">@ativo.Ticker</h5>
+                                    <p>Quantidade: @ativo.Quantidade</p>
+                                    <p>Total: R$@ativo.Total</p>
                                 </div>
                             </div>
                         </div>
@@ -81,15 +80,15 @@
                 </div>
                 <div class="modal-body">
                      <div class="col-md-6">
-                         <label for="Portifolio.NomePortifolio" class="control-label">Nome:</label>
-                         <input asp-for="Portifolio.NomePortifolio" id="NomePortifolioModal" class="form-control" />
-                         <span asp-validation-for="Portifolio.NomePortifolio" class="text-danger"></span>
+                        <label for="Carteira.NomeCarteira" class="control-label">Nome:</label>
+                         <input asp-for="Carteira.NomeCarteira" id="NomeCarteiraModal" class="form-control" />
+                         <span asp-validation-for="Carteira.NomeCarteira" class="text-danger"></span>
                          <br />
                      </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="SalvaNomePortifolio('/Portifolio/Save')">Salvar</button>
+                    <button type="button" class="btn btn-primary" onclick="SalvaNomeCarteira('/Carteira/Save')">Salvar</button>
                 </div>
             </div>
         </div>
@@ -107,8 +106,6 @@
         modal.find('.modal-title').text('New message to ' + recipient)
         modal.find('.modal-body input').val(recipient)
     })
-
-  
 
 </script>
 

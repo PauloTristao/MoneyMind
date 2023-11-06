@@ -5,6 +5,7 @@ using MoneyMind.DAO;
 using MoneyMind.Models;
 using Newtonsoft.Json;
 using System;
+using System.IO;
 
 namespace MoneyMind.Controllers
 {
@@ -82,18 +83,20 @@ namespace MoneyMind.Controllers
                 ValidaDados(model, Operacao);
                 if (ModelState.IsValid == false)
                 {
-                    ViewBag.Operacao = Operacao;
-                    //PreencheDadosParaView(Operacao, model);
                     return View("Form", model);
                 }
                 else
                 {
-                    model.Adm = false;
-                    if (Operacao == "I")
-                        usuarioDao.Insert(model);
-                    else
-                        usuarioDao.Update(model);
-                    return RedirectToAction("Index","Login");
+                    PortifolioDAO portifolio = new PortifolioDAO();
+                    PortifolioViewModel port = new PortifolioViewModel()
+                    {
+                        Nome = model.NomePortifolio
+                    };
+                    usuarioDao.Insert(model);
+                    port.IdUsuario = model.Id;
+                    portifolio.Insert(port);
+
+                    return RedirectToAction("Index", "Login");
                 }
             }
             catch (Exception erro)
@@ -102,16 +105,34 @@ namespace MoneyMind.Controllers
             }
         }
 
+        public byte[] ConvertImageToByte(IFormFile file)
+        {
+            if (file != null)
+                using (var ms = new MemoryStream())
+                {
+                    file.CopyTo(ms);
+                    return ms.ToArray();
+                }
+            else
+                return null;
+        }
+
         protected void ValidaDados(UsuarioViewModel model, string operacao)
         {
-            ModelState.Clear();
-            if (model.NomePessoa == null)
-                ModelState.AddModelError("NomePessoa", "Preencha esse campo");
-            if (model.LoginUsuario == null)
-                ModelState.AddModelError("LoginUsuario", "Preencha esse campo");
-            if (model.Senha == null)
-                ModelState.AddModelError("Senha", "Preencha esse campo");
-
+            if (string.IsNullOrEmpty(model.NomePessoa))
+                ModelState.AddModelError("NomePessoa", "Preencha o nome.");
+            if (string.IsNullOrEmpty(model.NomePortifolio))
+                ModelState.AddModelError("NomePortifolio", "Preencha o portifolio.");
+            if (string.IsNullOrEmpty(model.Senha))
+                ModelState.AddModelError("senha", "Preencha a senha.");
+            if (model != null && !string.IsNullOrEmpty(model.Senha) && model.Senha.Length < 4)
+                ModelState.AddModelError("senha", "A senha tem que conter pelo menos 4 caracteres");
+            //Imagem será obrigatio apenas na inclusão.
+            //Na alteração iremos considerar a que já estava salva.
+            if (model.Imagem == null && operacao == "I")
+                ModelState.AddModelError("Imagem", "Escolha uma imagem.");
+            if (model.Imagem != null && model.Imagem.Length / 1024 / 1024 >= 2)
+                ModelState.AddModelError("Imagem", "Imagem limitada a 2 mb.");
         }
     }
 }

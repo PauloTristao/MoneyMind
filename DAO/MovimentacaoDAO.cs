@@ -26,6 +26,7 @@ namespace MoneyMind.DAO
             MovimentacaoViewModel ativo = new MovimentacaoViewModel();
             ativo.Id = Convert.ToInt32(registro["id_movimentacao"]);
             ativo.Id_Operacao = Convert.ToInt32(registro["id_operacao"]);
+            ativo.Id_Ativo = Convert.ToInt32(registro["id_ativo"]);
             ativo.Preco = Convert.ToDouble(registro["preco"]);
             ativo.Id_carteira = Convert.ToInt32(registro["id_carteira"]);
             ativo.Quantidade = Convert.ToInt32(registro["quantidade"]);

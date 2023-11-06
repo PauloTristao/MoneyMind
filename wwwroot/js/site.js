@@ -4,7 +4,6 @@
 }
 
 function SalvaNomePortifolio(url) {
-    debugger;
     var idPortifolio = $("#IdPortifolio").val();
     var nomePortifolio = $("#NomePortifolioModal").val();
     var idUsuario = $("#IdUsuario").val();
@@ -31,3 +30,7 @@ function SalvaNomePortifolio(url) {
          }
      });
 };
+
+function ConsultaCarteira(url, id) {
+    window.location.href = url + "/" + id;
+}

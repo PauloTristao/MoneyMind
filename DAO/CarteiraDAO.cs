@@ -46,7 +46,7 @@ namespace MoneyMind.DAO
 
         protected override void SetTabela()
         {
-            Tabela = "Portifolio";
+            Tabela = "Carteira";
         }
     }
 }
