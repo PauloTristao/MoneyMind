@@ -92,8 +92,8 @@ namespace MoneyMind.Controllers
                     {
                         Nome = model.NomePortifolio
                     };
-                    usuarioDao.Insert(model);
-                    port.IdUsuario = model.Id;
+                    
+                    port.IdUsuario = usuarioDao.Insert(model);
                     portifolio.Insert(port);
 
                     return RedirectToAction("Index", "Login");
@@ -133,6 +133,8 @@ namespace MoneyMind.Controllers
                 ModelState.AddModelError("Imagem", "Escolha uma imagem.");
             if (model.Imagem != null && model.Imagem.Length / 1024 / 1024 >= 2)
                 ModelState.AddModelError("Imagem", "Imagem limitada a 2 mb.");
+
+            model.ImagemEmByte = ConvertImageToByte(model.Imagem);
         }
     }
 }
