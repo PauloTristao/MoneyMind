@@ -48,7 +48,7 @@
             <legend style="width: 11%">Carteiras</legend>
             <div class="row ml-3">
                 <div class="mt-auto text-right">
-                    <a href="+" class="btn btn-dark">+</a>
+                    <a href="#" class="btn btn-dark" data-toggle="modal" data-target="#NovaCarteira">+</a>
                 </div>
             </div>
             <section>
@@ -74,7 +74,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Altere o nome do portifólio:</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -95,10 +95,44 @@
         </div>
     </div>
 
+
+    <div class="modal fade" id="NovaCarteira" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nome da nova carteira:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-6">
+                        <label for="nomeNovaCarteira" class="control-label">Nome:</label>
+                        <input type="text" id="nomeNovaCarteira" class="form-control">
+                        <br />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="CriaNovaCarteira('/Carteira/Save')">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script>
     $('#exampleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var recipient = button.data('whatever') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('.modal-title').text('New message to ' + recipient)
+        modal.find('.modal-body input').val(recipient)
+    })
+
+    $('#novaCarteira').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
         var recipient = button.data('whatever') // Extract info from data-* attributes
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).

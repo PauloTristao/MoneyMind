@@ -319,6 +319,19 @@ begin
 			            values (@descricao, @id_portifolio)
 end
 
+go
+create or ALTER   procedure [dbo].[spListagemCarteiras]
+(
+   @id_usuario int
+)
+as
+begin
+ select c.* from Carteira c
+ inner join Portifolio p on p.id_portifolio = c.id_portifolio
+ inner join Usuario u on u.id_usuario = p.id_usuario where u.id_usuario = @id_usuario
+end
+
+
 
 ------------------------------------------------SP's Movimentacao---------------------------------------------------------
 go
@@ -331,3 +344,22 @@ begin
  select * from Movimentacao where id_carteira = @id_carteira
 end
 GO
+
+go
+create procedure [dbo].[spConsultaAvancadaMovimentacoes]
+(
+@carteira int,
+@dataInicial datetime,
+@dataFinal datetime)
+as
+begin
+	declare @categIni int
+	declare @categFim int
+	set @categIni = case @carteira when 0 then 0 else @carteira end
+	set @categFim = case @carteira when 0 then 999999 else @carteira end
+	 select m.*, c.descricao as 'DescricaoCarteira'
+	from Movimentacao m
+	inner join Carteira c on m.id_carteira = c.id_carteira
+	where m.data_hora_movimentacao between @dataInicial and @dataFinal and
+	m.id_carteira between @categIni and @categFim; 
+end

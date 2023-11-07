@@ -10,5 +10,6 @@ namespace MoneyMind.Models
         public int Quantidade { get; set; }
         public double Preco { get; set;}
         public DateTime DataMovimentacao { get; set;}
+        public string DescricaoCarteira { get; set;}
     }
 }

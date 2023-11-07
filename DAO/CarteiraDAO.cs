@@ -44,9 +44,27 @@ namespace MoneyMind.DAO
             return lista;
         }
 
+        public List<CarteiraViewModel> ListaCarteiras(int idUsuario)
+        {
+            var p = new SqlParameter[]
+            {
+                new SqlParameter("id_usuario", idUsuario),
+            };
+            DataTable tabela = HelperDAO.ExecutaProcSelect("spListagemCarteiras", p);
+            List<CarteiraViewModel> retorno = new List<CarteiraViewModel>();
+
+            foreach (DataRow registro in tabela.Rows)
+            {
+                retorno.Add(MontaModel(registro));
+            }
+
+            return retorno;
+        }
+
         protected override void SetTabela()
         {
             Tabela = "Carteira";
+            ChaveIdentity = true;
         }
     }
 }

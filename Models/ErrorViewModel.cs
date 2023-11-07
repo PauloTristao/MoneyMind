@@ -18,5 +18,6 @@ namespace MoneyMind.Models
 
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
         #endregion
+
     }
 }

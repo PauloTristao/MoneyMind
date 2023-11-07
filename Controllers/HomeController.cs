@@ -22,6 +22,7 @@ namespace MoneyMind.Controllers
                 ViewBag.LoginUsuario = usuario.LoginUsuario.ToUpper();
                 ViewBag.NomePessoa = usuario.NomePessoa.ToUpper();
                 ViewBag.ImagemBase64 = usuario.ImagemEmBase64;
+                ViewBag.Adm = usuario.Adm;
             }
             else
                 return RedirectToAction("Index", "Login");
