@@ -38,8 +38,7 @@ namespace MoneyMind.Controllers
                     };
                     if (Operacao == "I")
                     {
-                        DAO.Insert(model);
-                        port.IdUsuario = model.Id;
+                        port.IdUsuario = DAO.Insert(model);
                         portifolio.Insert(port);
                     }
                     else

@@ -108,7 +108,6 @@ go
 --------------------------------------------------SP's ATIVO-------------------------------------------------------
 GO
 create or alter procedure spInsert_Ativo
- @id int,
  @ticker varchar(max),
  @empresa varchar(max),
  @id_classe_ativo int
@@ -204,7 +203,6 @@ end
 go
 create or alter procedure spInsert_Usuario
 (
-	@id int,
 	@login_usuario varchar(max),
 	@nome_pessoa varchar(max),
 	@senha varchar(max),
@@ -213,8 +211,8 @@ create or alter procedure spInsert_Usuario
 )
 as
 begin
-	insert into Usuario (id_usuario, login_usuario, nome_pessoa, senha, adm, imagem) 
-			            values (@id, @login_usuario, @nome_pessoa, @senha, @adm, @imagem)
+	insert into Usuario (login_usuario, nome_pessoa, senha, adm, imagem) 
+			            values (@login_usuario, @nome_pessoa, @senha, @adm, @imagem)
 end
 
 go
