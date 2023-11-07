@@ -24,7 +24,7 @@ create table Portifolio
 	nome varchar(100) not null,
 	id_usuario int not null,
 	
-	foreign key (id_usuario) references Usuario(id_usuario),
+	foreign key (id_usuario) references Usuario(id_usuario) on delete cascade,
 
 	UNIQUE (id_usuario)
 )
@@ -35,7 +35,7 @@ create table Carteira
 	id_carteira int primary key identity(1,1) not null,
 	descricao varchar(100) null,
 	id_portifolio int not null,
-	foreign key (id_portifolio) references Portifolio(id_portifolio)
+	foreign key (id_portifolio) references Portifolio(id_portifolio) on delete cascade
 )
 
 ------------------------------------------Criação da Tabela Geral-----------------------------------------------------
@@ -108,6 +108,7 @@ go
 --------------------------------------------------SP's ATIVO-------------------------------------------------------
 GO
 create or alter procedure spInsert_Ativo
+ @id int,
  @ticker varchar(max),
  @empresa varchar(max),
  @id_classe_ativo int
@@ -203,6 +204,7 @@ end
 go
 create or alter procedure spInsert_Usuario
 (
+	@id int,
 	@login_usuario varchar(max),
 	@nome_pessoa varchar(max),
 	@senha varchar(max),
@@ -260,6 +262,7 @@ end
 go
 create or alter procedure spInsert_Portifolio
 (
+	@id int,
 	@Nome varchar(max),
 	@id_usuario int
 )
@@ -308,6 +311,7 @@ end
 go
 create or alter procedure spInsert_Carteira
 (
+	@id int,
 	@descricao varchar(max),
 	@id_portifolio int
 )

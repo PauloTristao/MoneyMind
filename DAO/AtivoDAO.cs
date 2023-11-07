@@ -12,6 +12,7 @@ namespace MoneyMind.DAO
         {
             SqlParameter[] parameters = new SqlParameter[]
             {
+                new SqlParameter("id", model.Id),
                 new SqlParameter("ticker", model.Ticker),
                 new SqlParameter("empresa", model.Empresa),
                 new SqlParameter("id_classe_ativo", model.Id_classe_ativo)

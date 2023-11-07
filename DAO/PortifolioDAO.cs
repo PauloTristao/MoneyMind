@@ -10,6 +10,7 @@ namespace MoneyMind.DAO
         protected override SqlParameter[] CriaParametros(PortifolioViewModel model)
         {
             SqlParameter[] parameters = new SqlParameter[] {
+                new SqlParameter("id", model.Id),
                 new SqlParameter("id_usuario", model.IdUsuario),
                 new SqlParameter("nome", model.Nome)
             };
