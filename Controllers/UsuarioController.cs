@@ -13,7 +13,6 @@ namespace MoneyMind.Controllers
         public UsuarioController()
         {
             DAO = new UsuarioDAO();
-
         }
 
 
