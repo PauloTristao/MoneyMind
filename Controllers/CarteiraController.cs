@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MoneyMind.DAO;
 using MoneyMind.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Security.Policy;
 
@@ -124,5 +126,58 @@ namespace MoneyMind.Controllers
                 return View("Error", new ErrorViewModel(erro.ToString()));
             }
         }
+
+
+        public IActionResult ExibeMovimentacao()
+        {
+            try
+            {
+                UsuarioViewModel usuario = HttpContext.Session.GetObject<UsuarioViewModel>("Usuario");
+                PreparaComboCarteiras(usuario.Id);
+                ViewBag.Carteira.Insert(0, new SelectListItem("TODAS", "0"));
+                return View("Movimentacao");
+            }
+            catch (Exception erro)
+            {
+                return View("Error", new ErrorViewModel(erro.Message));
+            }
+        }
+
+
+        private void PreparaComboCarteiras(int idUsuario)
+        {
+            CarteiraDAO dao = new CarteiraDAO();
+            var lista = dao.ListaCarteiras(idUsuario);
+
+            List<SelectListItem> listaRetorno = new List<SelectListItem>();
+            foreach (var cart in lista)
+            {
+                listaRetorno.Add(new SelectListItem(cart.Descricao, cart.Id.ToString()));
+            }
+
+            ViewBag.Carteira = listaRetorno;
+        }
+
+        public IActionResult ObtemDadosConsultaAvancada(
+                int carteira,
+                DateTime dataInicial,
+                DateTime dataFinal)
+        {
+            try
+            {
+                MovimentacaoDAO dao = new MovimentacaoDAO();
+                if (dataInicial.Date == Convert.ToDateTime("01/01/0001"))
+                    dataInicial = SqlDateTime.MinValue.Value;
+                if (dataFinal.Date == Convert.ToDateTime("01/01/0001"))
+                    dataFinal = SqlDateTime.MaxValue.Value;
+                var lista = dao.ConsultaAvancadaMovimentacao(carteira, dataInicial, dataFinal);
+                return PartialView("pvGridMovimentacao", lista);
+            }
+            catch (Exception erro)
+            {
+                return Json(new { erro = true, msg = erro.Message });
+            }
+        }
+
     }
 }

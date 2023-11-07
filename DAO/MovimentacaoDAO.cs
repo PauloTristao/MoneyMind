@@ -23,16 +23,19 @@ namespace MoneyMind.DAO
 
         protected override MovimentacaoViewModel MontaModel(DataRow registro)
         {
-            MovimentacaoViewModel ativo = new MovimentacaoViewModel();
-            ativo.Id = Convert.ToInt32(registro["id_movimentacao"]);
-            ativo.Id_Operacao = Convert.ToInt32(registro["id_operacao"]);
-            ativo.Id_Ativo = Convert.ToInt32(registro["id_ativo"]);
-            ativo.Preco = Convert.ToDouble(registro["preco"]);
-            ativo.Id_carteira = Convert.ToInt32(registro["id_carteira"]);
-            ativo.Quantidade = Convert.ToInt32(registro["quantidade"]);
-            ativo.DataMovimentacao = Convert.ToDateTime(registro["data_hora_movimentacao"]);
+            MovimentacaoViewModel movimentacao = new MovimentacaoViewModel();
+            movimentacao.Id = Convert.ToInt32(registro["id_movimentacao"]);
+            movimentacao.Id_Operacao = Convert.ToInt32(registro["id_operacao"]);
+            movimentacao.Id_Ativo = Convert.ToInt32(registro["id_ativo"]);
+            movimentacao.Preco = Convert.ToDouble(registro["preco"]);
+            movimentacao.Id_carteira = Convert.ToInt32(registro["id_carteira"]);
+            movimentacao.Quantidade = Convert.ToInt32(registro["quantidade"]);
+            movimentacao.DataMovimentacao = Convert.ToDateTime(registro["data_hora_movimentacao"]);
 
-            return ativo;
+            if (registro.Table.Columns.Contains("DescricaoCarteira"))
+                movimentacao.DescricaoCarteira = registro["DescricaoCarteira"].ToString();
+
+            return movimentacao;
         }
 
         public List<MovimentacaoViewModel> ConsultaMovimentacoesPorCarteira(int id_carteira)
@@ -51,9 +54,28 @@ namespace MoneyMind.DAO
             return lista;
         }
 
+        public List<MovimentacaoViewModel> ConsultaAvancadaMovimentacao(int carteira,
+                                                         DateTime dataInicial,
+                                                         DateTime dataFinal)
+        {
+            SqlParameter[] p = {
+                new SqlParameter("carteira", carteira),
+                new SqlParameter("dataInicial", dataInicial),
+                new SqlParameter("dataFinal", dataFinal),
+            };
+
+            var tabela = HelperDAO.ExecutaProcSelect("spConsultaAvancadaMovimentacoes", p);
+            var lista = new List<MovimentacaoViewModel>();
+            foreach (DataRow dr in tabela.Rows)
+                lista.Add(MontaModel(dr));
+
+            return lista;
+        }
+
         protected override void SetTabela()
         {
-            Tabela = "Ativo";
+            Tabela = "Movimentacao";
+            ChaveIdentity = true;
         }
     }
 }

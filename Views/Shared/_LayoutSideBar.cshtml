@@ -17,7 +17,7 @@
     <div class="sidebar">
         <div class="logo-details">
             <i class='bx bxl-c-plus-plus icon'></i>
-            <div class="logo_name">CodingLab</div>
+            <div class="logo_name">MoneyMind</div>
             <i class='bx bx-menu' id="btn"></i>
         </div>
         <ul class="nav-list">
@@ -29,17 +29,21 @@
             <li>
                 <a href="#" onclick="CarregaPaginaCentral('/Home/Index')">
                     <i class='bx bx-grid-alt'></i>
-                    <span class="links_name">Dashboard</span>
+                    <span class="links_name">Home</span>
                 </a>
-                <span class="tooltip">Dashboard</span>
+                <span class="tooltip">Home</span>
             </li>
-            <li>
-                <a href="#" onclick="CarregaPaginaCentral('/Usuario/Index')">
-                    <i class='bx bx-user'></i>
-                    <span class="links_name">User</span>
-                </a>
-                <span class="tooltip">User</span>
-            </li>
+@*             @if (ViewBag.Adm)
+            { *@
+                <li>
+
+                    <a href="#" onclick="CarregaPaginaCentral('/Usuario/Index')">
+                        <i class='bx bx-user'></i>
+                        <span class="links_name">User</span>
+                    </a>
+                    <span class="tooltip">User</span>
+                </li>
+            @* } *@
             <li>
                 <a href="#" onclick="CarregaPaginaCentral('/Portifolio/Index')">
                     <i class='bx bx-wallet'></i>
@@ -47,28 +51,23 @@
                 </a>
                 <span class="tooltip">Portifolio</span>
             </li>
+       @*      @if (ViewBag.Adm)
+            { *@
+                <li>
+                    <a href="#" onclick="CarregaPaginaCentral('/Ativo/Index')">
+                        <i class='bx bx-money'></i>
+                        <span class="links_name">Ativos</span>
+                    </a>
+                    <span class="tooltip">Ativos</span>
+                </li>
+            @* } *@
             <li>
-                <a href="#" onclick="CarregaPaginaCentral('/Ativo/Index')">
-                    <i class='bx bx-money'></i>
-                    <span class="links_name">Ativos</span>
-                </a>
-                <span class="tooltip">Ativos</span>
-            </li>
-            <li>
-                <a href="#">
+                <a href="#" onclick="CarregaPaginaCentral('/Carteira/ExibeMovimentacao')">
                     <i class='bx bx-transfer'></i>
                     <span class="links_name">Movimentações</span>
                 </a>
                 <span class="tooltip">Movimentações</span>
             </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-chat'></i>
-                    <span class="links_name">Messages</span>
-                </a>
-                <span class="tooltip">Messages</span>
-            </li>
-            <!-- Adicione os links para outras seções aqui -->
             <li class="profile">
                 <div class="profile-details">
                     <img src="data:image/jpeg;base64,@ViewBag.ImagemEmBase64" alt="profileImg">
