@@ -87,14 +87,7 @@ namespace MoneyMind.Controllers
                 }
                 else
                 {
-                    PortifolioDAO portifolio = new PortifolioDAO();
-                    PortifolioViewModel port = new PortifolioViewModel()
-                    {
-                        Nome = model.NomePortifolio
-                    };
-                    
-                    port.IdUsuario = usuarioDao.Insert(model);
-                    portifolio.Insert(port);
+                    usuarioDao.Insert(model);
 
                     return RedirectToAction("Index", "Login");
                 }

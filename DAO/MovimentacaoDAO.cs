@@ -72,6 +72,29 @@ namespace MoneyMind.DAO
             return lista;
         }
 
+        public List<ItemTabelaGeralViewModel> ListaOperacao()
+        {
+            var p = new SqlParameter[]
+            {
+                new SqlParameter("id_tabela_geral", 1),
+            };
+            DataTable tabela = HelperDAO.ExecutaProcSelect("spListagemOperacao", p);
+            List<ItemTabelaGeralViewModel> retorno = new List<ItemTabelaGeralViewModel>();
+
+            ItemTabelaGeralViewModel itemTabelaGeral;
+            foreach (DataRow registro in tabela.Rows)
+            {
+                itemTabelaGeral = new ItemTabelaGeralViewModel();
+                itemTabelaGeral.Id = Convert.ToInt32(registro["id_item_tabela_geral"]);
+                itemTabelaGeral.Id_tabela_geral = Convert.ToInt32(registro["id_tabela_geral"]);
+                itemTabelaGeral.Descricao = registro["descricao"].ToString();
+
+                retorno.Add(itemTabelaGeral);
+            }
+
+            return retorno;
+        }
+
         protected override void SetTabela()
         {
             Tabela = "Movimentacao";

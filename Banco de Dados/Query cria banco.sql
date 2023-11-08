@@ -142,6 +142,18 @@ begin
  update Ativo set ticker = @ticker, empresa = @empresa, id_classe_ativo = @id_classe_ativo where id_ativo = @id
 end
 GO
+
+
+go
+create or ALTER procedure [dbo].[spListagemAtivo]
+(
+   @ativo varchar(max)
+)
+as
+begin
+	select * from Ativo
+end
+go
 ------------------------------------------------------SP's GENERICAS-----------------------------------------------
 create or alter procedure spListagem
 (
@@ -364,4 +376,14 @@ begin
 	inner join Carteira c on m.id_carteira = c.id_carteira
 	where m.data_hora_movimentacao between @dataInicial and @dataFinal and
 	m.id_carteira between @categIni and @categFim; 
+end
+
+go
+create or ALTER procedure [dbo].[spListagemOperacao]
+(
+   @id_tabela_Geral int
+)
+as
+begin
+	select * from Item_Tabela_Geral where id_tabela_geral = @id_tabela_Geral
 end

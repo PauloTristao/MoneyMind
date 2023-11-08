@@ -26,6 +26,53 @@ namespace MoneyMind.DAO
             return p;
         }
 
+        public override int Insert(UsuarioViewModel model)
+        {
+            try
+            {
+                using (var transacao = new System.Transactions.TransactionScope())
+                {
+                    PortifolioViewModel port = new PortifolioViewModel()
+                    {
+                        Nome = model.NomePortifolio
+                    };
+                    PortifolioDAO portifolio = new PortifolioDAO();
+                    port.IdUsuario = HelperDAO.ExecutaProc("spInsert_" + Tabela, CriaParametros(model), ChaveIdentity);
+                    portifolio.Insert(port);
+                    transacao.Complete();
+                }
+                return model.Id;
+            }
+            catch 
+            {
+                return 0;
+            }
+
+        }
+
+        public override void Update(UsuarioViewModel model)
+        {
+            try
+            {
+                using (var transacao = new System.Transactions.TransactionScope())
+                {
+                    PortifolioViewModel port = new PortifolioViewModel()
+                    {
+                        Nome = model.NomePortifolio
+                    };
+                    port.IdUsuario = HelperDAO.ExecutaProc("spUpdate_" + Tabela, CriaParametros(model));
+                    PortifolioDAO portifolio = new PortifolioDAO();
+                    portifolio.Update(port);
+
+                    transacao.Complete();
+                }
+            }
+            catch (Exception erro)
+            {
+                
+            }
+        }
+
         protected override UsuarioViewModel MontaModel(DataRow registro)
         {
             UsuarioViewModel u = new UsuarioViewModel()

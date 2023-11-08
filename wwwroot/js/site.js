@@ -36,9 +36,9 @@ function SalvaNomeCarteira(url) {
     var nomeCarteira = $("#NomeCarteiraModal").val();
     var idPortifolio = $("#IdPortifolio").val();
 
-    var data =
+    var model =
     {
-        Model: {
+        model: {
             Id: idCarteira,
             Descricao: nomeCarteira,
             Id_Portifolio: idPortifolio
@@ -46,24 +46,43 @@ function SalvaNomeCarteira(url) {
         Operacao: "A"
     };
 
+
     $.ajax({
-        url: url,
+        url: '../../Carteira/ConsultaCarteiraNome',
         type: "POST",
-        data: data,
+        data: model,
+        async: false,
         success: function (data) {
-            location.href = "/Carteira/CarregaCarteira/" + idCarteira;
+            if (data == true) {
+                alert("Nome já utilizado!");
+            }
+            else {
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: model,
+                    success: function (data) {
+                        location.href = "/Carteira/CarregaCarteira/" + idCarteira;
+                    },
+                    error: function () {
+                        alert("Erro ao carregar o conteúdo.");
+                    }
+                });
+            }
         },
         error: function () {
             alert("Erro ao carregar o conteúdo.");
         }
     });
+
+  
 };
 
 function CriaNovaCarteira(url) {
     var nomeCarteira = $("#nomeNovaCarteira").val();
     var idPortifolio = $("#IdPortifolio").val();
 
-    var data =
+    var model =
     {
         model: {
             Descricao: nomeCarteira,
@@ -73,18 +92,73 @@ function CriaNovaCarteira(url) {
     }
 
     $.ajax({
-        url: url,
+        url: 'Carteira/ConsultaCarteiraNome',
         type: "POST",
-        data: data,
+        data: model,
+        async: false,
         success: function (data) {
-            location.href = "/Carteira/CarregaCarteira/" + data.IdCarteira;
+            if (data == true) {
+                alert("Nome já utilizado!");
+            }
+            else {
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: model,
+                    success: function (data) {
+                        location.href = "/Portifolio/Index";
+                    },
+                    error: function () {
+                        alert("Erro ao carregar o conteúdo.");
+                    }
+                });
+            }
         },
         error: function () {
             alert("Erro ao carregar o conteúdo.");
         }
     });
+
+
+   
 }
 
 function ConsultaCarteira(url, id) {
     window.location.href = url + "/" + id;
+}
+
+function salvaMovimentacao() {
+    debugger;
+    var vAtivo = document.getElementById('ativo').value;
+    var vCarteira = $('#carteira').val();
+    var vOperacao = document.getElementById('operacao').value;
+    var vQuantidade = document.getElementById('Quantidade').value;
+    var vPreco = document.getElementById('Preco').value;
+    var vDataMovimentacao = document.getElementById('DataMovimentacao').value;
+
+    var model =
+    {
+        model: {
+            Id_carteira: vCarteira,
+            Id_Ativo: vAtivo,
+            Id_Operacao: vOperacao,
+            Quantidade: vQuantidade,
+            Preco: vPreco,
+            DataMovimentacao: vDataMovimentacao 
+        },
+        Operacao: "I"
+    }
+
+    $.ajax({
+        url: "/Movimentacao/Save",
+        data: model,
+        success: function (dados) {
+            if (dados.erro != undefined) {
+                alert(dados.msg);
+            }
+            else {
+                location.href = "/Carteira/CarregaCarteira/" + vCarteira;
+            }
+        },
+    });
 }

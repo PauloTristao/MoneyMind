@@ -121,6 +121,7 @@ namespace MoneyMind
             {
                 UsuarioViewModel usuario = HttpContext.Session.GetObject<UsuarioViewModel>("Usuario");
                 ViewBag.LoginUsuario = usuario.LoginUsuario.ToUpper();
+                ViewBag.Adm = usuario.Adm;
                 ViewBag.NomePessoa = usuario.NomePessoa.ToUpper();
                 ViewBag.ImagemBase64 = usuario.ImagemEmBase64;
                 base.OnActionExecuting(context);

@@ -17,18 +17,6 @@ namespace MoneyMind.Controllers
             DAO = new CarteiraDAO();
         }
 
-        //public override IActionResult Index()
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction("CarregaCarteira");
-        //    }
-        //    catch (Exception erro)
-        //    {
-        //        return View("Error", new ErrorViewModel(erro.ToString()));
-        //    }
-        //}
-
         public IActionResult CarregaCarteira(int id)
         {
             try
@@ -115,16 +103,26 @@ namespace MoneyMind.Controllers
                 else
                 {
                     if (Operacao == "I")
-                        DAO.Insert(model);
+                        return CarregaCarteira(DAO.Insert(model));
                     else
+                    {
                         DAO.Update(model);
-                    return CarregaCarteira(model.Id);
+                        return CarregaCarteira(model.Id);
+                    }
+                    
                 }
             }
             catch (Exception erro)
             {
                 return View("Error", new ErrorViewModel(erro.ToString()));
             }
+        }
+
+        public bool ConsultaCarteiraNome(CarteiraViewModel model, string operacao)
+        {
+            CarteiraDAO carteiraDao = new CarteiraDAO();
+            bool nomeJaCadastrado = carteiraDao.ConsultaCarteirasPorPortifolio(model.Id_Portifolio).Any(x => x.Descricao == model.Descricao);
+            return nomeJaCadastrado;
         }
 
 

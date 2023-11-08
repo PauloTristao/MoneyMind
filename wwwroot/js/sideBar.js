@@ -3,7 +3,7 @@
 function CarregaPaginaCentral(url) {
     $.ajax({
         url: url, 
-        type: "GET",
+        type: "POST",
         success: function (data) {
             $("#content-container").html(data); 
         },

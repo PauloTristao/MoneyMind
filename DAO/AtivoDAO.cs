@@ -47,9 +47,27 @@ namespace MoneyMind.DAO
             return lista;
         }
 
+        public List<AtivoViewModel> ListaAtivo()
+        {
+            var p = new SqlParameter[]
+            {
+                new SqlParameter("ativo", "todos"),
+            };
+            DataTable tabela = HelperDAO.ExecutaProcSelect("spListagemAtivo", p);
+            List<AtivoViewModel> retorno = new List<AtivoViewModel>();
+
+            foreach (DataRow registro in tabela.Rows)
+            {
+                retorno.Add(MontaModel(registro));
+            }
+
+            return retorno;
+        }
+
         protected override void SetTabela()
         {
             Tabela = "Ativo";
+            ChaveIdentity = true;
         }
     }
 }

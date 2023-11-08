@@ -38,13 +38,10 @@ namespace MoneyMind.Controllers
                     if (Operacao == "I")
                     {
                         port.IdUsuario = DAO.Insert(model);
-                        portifolio.Insert(port);
                     }
                     else
                     {
                         DAO.Update(model);
-                        port.IdUsuario = model.Id;
-                        portifolio.Update(port);
                     }
 
                     return RedirectToAction(NomeViewIndex);
@@ -54,13 +51,6 @@ namespace MoneyMind.Controllers
             {
                 return View("Error", new ErrorViewModel(erro.ToString()));
             }
-
-            /// <summary>
-            /// Converte a imagem recebida no form em um vetor de bytes
-            /// </summary>
-            /// <param name="file"></param>
-            /// <returns></returns>
-           
         }
 
         public byte[] ConvertImageToByte(IFormFile file)
@@ -86,8 +76,6 @@ namespace MoneyMind.Controllers
                 ModelState.AddModelError("senha", "Preencha a senha.");
             if (model != null && !string.IsNullOrEmpty(model.Senha) && model.Senha.Length < 4)
                 ModelState.AddModelError("senha", "A senha tem que conter pelo menos 4 caracteres");
-            //Imagem será obrigatio apenas na inclusão.
-            //Na alteração iremos considerar a que já estava salva.
             if (model.Imagem == null && operacao == "I")
                 ModelState.AddModelError("Imagem", "Escolha uma imagem.");
             if (model.Imagem != null && model.Imagem.Length / 1024 / 1024 >= 2)
