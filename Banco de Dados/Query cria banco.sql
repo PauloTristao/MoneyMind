@@ -387,3 +387,20 @@ as
 begin
 	select * from Item_Tabela_Geral where id_tabela_geral = @id_tabela_Geral
 end
+
+  go
+create or alter procedure spInsert_Movimentacao
+(
+	@id int,
+	@id_carteira int,
+	@id_ativo int,
+	@id_operacao int,
+	@quantidade int,
+	@preco decimal(10,2),
+	@data_hora_movimentacao datetime
+)
+as
+begin
+	insert into Movimentacao (id_carteira, id_ativo, id_operacao, quantidade, preco, data_hora_movimentacao) 
+			            values (@id_carteira, @id_ativo, @id_operacao, @quantidade, @preco, @data_hora_movimentacao) 
+end

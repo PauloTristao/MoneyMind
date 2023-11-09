@@ -18,17 +18,17 @@ function SalvaNomePortifolio(url) {
         Operacao: "A"
     };
 
-     $.ajax({
-         url: url,
-         type: "POST",
-         data: data,
-         success: function (data) {
-             location.href = "/Portifolio/Index";
-         },
-         error: function () {
-             alert("Erro ao carregar o conteúdo.");
-         }
-     });
+    $.ajax({
+        url: url,
+        type: "POST",
+        data: data,
+        success: function (data) {
+            location.href = "/Portifolio/Index";
+        },
+        error: function () {
+            alert("Erro ao carregar o conteúdo.");
+        }
+    });
 };
 
 function SalvaNomeCarteira(url) {
@@ -75,7 +75,7 @@ function SalvaNomeCarteira(url) {
         }
     });
 
-  
+
 };
 
 function CriaNovaCarteira(url) {
@@ -88,7 +88,7 @@ function CriaNovaCarteira(url) {
             Descricao: nomeCarteira,
             Id_Portifolio: idPortifolio
         },
-        Operacao:"I"
+        Operacao: "I"
     }
 
     $.ajax({
@@ -120,7 +120,7 @@ function CriaNovaCarteira(url) {
     });
 
 
-   
+
 }
 
 function ConsultaCarteira(url, id) {
@@ -128,7 +128,6 @@ function ConsultaCarteira(url, id) {
 }
 
 function salvaMovimentacao() {
-    debugger;
     var vAtivo = document.getElementById('ativo').value;
     var vCarteira = $('#carteira').val();
     var vOperacao = document.getElementById('operacao').value;
@@ -136,29 +135,30 @@ function salvaMovimentacao() {
     var vPreco = document.getElementById('Preco').value;
     var vDataMovimentacao = document.getElementById('DataMovimentacao').value;
 
-    var model =
-    {
-        model: {
-            Id_carteira: vCarteira,
-            Id_Ativo: vAtivo,
-            Id_Operacao: vOperacao,
-            Quantidade: vQuantidade,
-            Preco: vPreco,
-            DataMovimentacao: vDataMovimentacao 
-        },
-        Operacao: "I"
+    if (!vAtivo || !vCarteira || !vOperacao || !vQuantidade || !vPreco || !vDataMovimentacao) {
+        alert("Por favor, preencha todos os campos obrigatórios.");
+        return;
     }
+
+    var model = {
+        Id_carteira: vCarteira,
+        Id_Ativo: vAtivo,
+        Id_Operacao: vOperacao,
+        Quantidade: vQuantidade,
+        Preco: vPreco,
+        DataMovimentacao: vDataMovimentacao
+    };
+
+    // Inclua a propriedade "Operacao" diretamente no objeto model
+    model.Operacao = "I";
 
     $.ajax({
         url: "/Movimentacao/Save",
+        Type: "POST",
         data: model,
-        success: function (dados) {
-            if (dados.erro != undefined) {
-                alert(dados.msg);
-            }
-            else {
-                location.href = "/Carteira/CarregaCarteira/" + vCarteira;
-            }
-        },
+        success: function () {
+            location.href = "../../Carteira/CarregaCarteira/" + vCarteira;
+        }
     });
+    location.href = "../../Carteira/CarregaCarteira/" + vCarteira;
 }
