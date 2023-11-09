@@ -359,8 +359,8 @@ begin
 end
 GO
 
-go
-create procedure [dbo].[spConsultaAvancadaMovimentacoes]
+GO
+ALTER procedure [dbo].[spConsultaAvancadaMovimentacoes]
 (
 @carteira int,
 @dataInicial datetime,
@@ -371,9 +371,10 @@ begin
 	declare @categFim int
 	set @categIni = case @carteira when 0 then 0 else @carteira end
 	set @categFim = case @carteira when 0 then 999999 else @carteira end
-	 select m.*, c.descricao as 'DescricaoCarteira'
+	 select m.*, c.descricao as 'DescricaoCarteira', a.ticker as 'DescricaoTicker'
 	from Movimentacao m
 	inner join Carteira c on m.id_carteira = c.id_carteira
+	inner join Ativo a on a.id_ativo = m.id_ativo
 	where m.data_hora_movimentacao between @dataInicial and @dataFinal and
 	m.id_carteira between @categIni and @categFim; 
 end

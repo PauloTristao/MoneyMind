@@ -35,6 +35,8 @@ namespace MoneyMind.DAO
 
             if (registro.Table.Columns.Contains("DescricaoCarteira"))
                 movimentacao.DescricaoCarteira = registro["DescricaoCarteira"].ToString();
+            if (registro.Table.Columns.Contains("DescricaoTicker"))
+                movimentacao.Ticker = registro["DescricaoTicker"].ToString();
 
             return movimentacao;
         }
