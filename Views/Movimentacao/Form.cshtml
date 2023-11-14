@@ -1,0 +1,89 @@
+﻿@model MovimentacaoViewModel
+@{
+    Layout = "_Layout";
+}
+
+<style>
+    fieldset {
+        padding: 0 10px 10px;
+        border: 1px solid #666;
+        border-radius: 8px;
+        padding-top: 10px;
+    }
+
+    legend {
+        padding: 2px 4px;
+        width: 15%
+    }
+
+    .container {
+        max-width: 100%;
+        width: 50%;
+        margin: 0 auto;
+    }
+
+</style>
+<head>
+    <script src="~/js/site.js"></script>
+</head>
+<form action="Save" method="post">
+    <div class="container">
+
+        <fieldset>
+            <legend>Cadastro</legend>
+            <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
+            <input type="hidden" name="Carteira" id="carteira" value="@ViewBag.Carteira" />
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger">
+                    <p>Por favor, corrija os seguintes erros:</p>
+                    <ul>
+                        @foreach (var key in ViewData.ModelState.Keys)
+                        {
+                            foreach (var error in ViewData.ModelState[key].Errors)
+                            {
+                                <li>@error.ErrorMessage</li>
+                            }
+                        }
+                    </ul>
+                </div>
+            }
+
+            <div class="col-lg-4">
+                Ativo<br />
+                <select id="ativo" class="form-control" asp-items="@ViewBag.Ativo"></select>
+            </div>
+
+            <div class="col-lg-4">
+                Operacao<br />
+                <select id="operacao" class="form-control" asp-items="@ViewBag.Operacao"></select>
+            </div>
+
+            <div class="col-lg-4">
+                <label for="Quantidade" class="control-label">Quantidade</label>
+                <input asp-for="Quantidade" class="form-control" />
+                <span asp-validation-for="Quantidade" class="text-danger"></span>
+                <br />
+            </div>
+
+            <div class="col-lg-4">
+                <label for="Preco" class="control-label">Preço</label>
+                <input asp-for="Preco" class="form-control" />
+                <span asp-validation-for="Preco" class="text-danger"></span>
+                <br />
+            </div>
+
+            <div class="col-lg-4">
+                <label for="DataMovimentacao" class="control-label">Data da movimentação</label>
+                <input asp-for="DataMovimentacao" type="date" value="@Model.DataMovimentacao.ToString("yyyy-MM-dd")" class="form-control" />
+                <span asp-validation-for="DataMovimentacao" class="text-danger"></span>
+            </div>
+
+            <br />
+            <input type="button" id="btnFiltro" class="btn btn-success" value="Aplicar"
+                   onclick="salvaMovimentacao()" />
+
+        </fieldset>
+    </div>
+</form>

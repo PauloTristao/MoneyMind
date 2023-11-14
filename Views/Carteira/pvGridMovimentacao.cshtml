@@ -1,0 +1,22 @@
+﻿@model List<MovimentacaoViewModel>
+<table class="table table-striped">
+    <tr>
+        <th>Código</th>
+        <th>Carteira</th>
+        <th>Ticker</th>
+        <th>Data da Movimentação</th>
+        <th>Quantidade</th>
+        <th>Valor</th>
+    </tr>
+    @foreach (var movimentacao in Model)
+    {
+        <tr>
+            <td>@movimentacao.Id</td>
+            <td>@movimentacao.DescricaoCarteira</td>
+            <td>@movimentacao.Ticker</td>
+            <td>@movimentacao.DataMovimentacao.ToShortDateString()</td>
+            <td>@movimentacao.Quantidade</td>
+            <td>@movimentacao.Preco.ToString("0.00")</td>
+        </tr>
+    }
+</table>

@@ -1,8 +1,23 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "_LayoutSideBar";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<style>
+    .imagem-home {
+        background-image: url('imagens/MoneyMind.png');
+        background-size: cover;
+        background-position: center top;
+        width: 100vw;
+        height: 100vh;
+    }
+</style>
+
+<div class="imagem-home">
+    <div class="text-center">
+        <h1 class="display-4" style="color: #fff">BEM-VINDO @ViewBag.NomePessoa !</h1>
+    </div>
+
 </div>
+

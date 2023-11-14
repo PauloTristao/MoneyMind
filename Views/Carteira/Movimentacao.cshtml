@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "_LayoutSideBar";
+}
+
+<fieldset id="areaFiltro" class="form-group">
+    <legend style="width: 11%">Movimentações </legend>
+    <div class="row">
+        <div class="col-lg-4">
+            Carteira<br />
+            <select id="carteira" class="form-control" asp-items="@ViewBag.Carteira"></select>
+        </div>
+        <div class="col-lg-2">
+            Período <br />
+            <input type="date" id="dataInicial" class="form-control" />
+        </div>
+        <div class="col-lg-2">
+            <br />
+            <input type="date" id="dataFinal" class="form-control" />
+        </div>
+        <div class="col-lg-1">
+            <br />
+            <input type="button" id="btnFiltro" class="btn btn-success" value="Aplicar"
+                   onclick="aplicaFiltroConsultaAvancada()" />
+        </div>
+    </div>
+</fieldset>
+<div id="resultadoConsulta" class="table-responsive">
+</div>
+
+<script>
+    function aplicaFiltroConsultaAvancada() {
+        var vCarteira = document.getElementById('carteira').value;
+        var vDataInicial = document.getElementById('dataInicial').value;
+        var vDataFinal = document.getElementById('dataFinal').value;
+        $.ajax({
+            url: "/carteira/ObtemDadosConsultaAvancada",
+            data: { carteira: vCarteira, dataInicial: vDataInicial, dataFinal: vDataFinal },
+            success: function (dados) {
+                if (dados.erro != undefined) {
+                    alert(dados.msg);
+                }
+                else {
+                    document.getElementById('resultadoConsulta').innerHTML = dados;
+                }
+            },
+        });
+    }
+</script>
